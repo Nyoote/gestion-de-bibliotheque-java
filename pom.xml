@@ -25,6 +25,7 @@
         <module>config-server</module>
         <module>api-gateway</module>
         <module>book-service</module>
+        <module>loan-service</module>
     </modules>
 
     <properties>
