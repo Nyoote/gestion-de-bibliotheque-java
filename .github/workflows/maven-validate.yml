@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -17,3 +18,5 @@ jobs:
           cache: maven
       - name: Maven validate
         run: mvn -B validate
+      - name: Maven compile
+        run: mvn -B compile
