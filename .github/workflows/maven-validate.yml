@@ -17,3 +17,5 @@ jobs:
           cache: maven
       - name: Maven validate
         run: mvn -B validate
+      - name: Maven compile
+        run: mvn -B compile
