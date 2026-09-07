@@ -4,7 +4,7 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8888"
   datasource:
-    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:bookdb;DB_CLOSE_DELAY=-1
   jpa:
     hibernate:
       ddl-auto: update

@@ -10,8 +10,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>book-server</artifactId>
-    <name>book-server</name>
+    <artifactId>book-service</artifactId>
+    <name>book-service</name>
     <description>Service de gestion des livres - Vérification de la disponibilité</description>
 
     <dependencies>
