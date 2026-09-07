@@ -9,6 +9,7 @@ COPY book-service/pom.xml book-service/
 COPY loan-service/pom.xml loan-service/
 
 COPY config-server/src config-server/src
+COPY config-server/config-repo config-server/config-repo
 
 RUN mvn -q -pl config-server -am package -DskipTests
 
