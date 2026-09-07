@@ -20,6 +20,7 @@ RUN addgroup --system spring && adduser --system --ingroup spring spring
 USER spring:spring
 
 COPY --from=build /workspace/config-server/target/config-server-*.jar app.jar
+COPY --from=build /workspace/config-server/config-repo config-repo
 
 EXPOSE 8888
 
