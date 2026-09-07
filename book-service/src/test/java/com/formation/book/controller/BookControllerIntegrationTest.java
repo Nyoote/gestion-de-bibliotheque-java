@@ -3,6 +3,7 @@ package com.formation.book.controller;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,9 +55,9 @@ class BookControllerIntegrationTest {
     void decrementStockEpuiseRetourne409() throws Exception {
         long id = createBook("Livre vide", "Auteur", "ISBN-EMPTY", 1, 0);
 
-        mockMvc.perform(post("/api/books/{id}/decrement-stock", id))
+        mockMvc.perform(patch("/api/books/{id}/decrement-stock", id))
                 .andExpect(status().isOk());
-        mockMvc.perform(post("/api/books/{id}/decrement-stock", id))
+        mockMvc.perform(patch("/api/books/{id}/decrement-stock", id))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status").value(409));
     }
@@ -65,7 +66,7 @@ class BookControllerIntegrationTest {
     void incrementStockAuDelaDuTotalRetourne409() throws Exception {
         long id = createBook("Livre plein", "Auteur", "ISBN-FULL", 1, 1);
 
-        mockMvc.perform(post("/api/books/{id}/increment-stock", id))
+        mockMvc.perform(patch("/api/books/{id}/increment-stock", id))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status").value(409));
     }
