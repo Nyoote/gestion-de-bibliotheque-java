@@ -21,7 +21,7 @@ Pour compiler et executer tous les tests :
 mvn test
 ```
 
-Le fichier [library.http](library.http) contient le parcours bout-en-bout via
+Le fichier [bibliotheque.http](bibliotheque.http) contient le parcours bout-en-bout via
 la gateway : creation d'un livre, emprunt reussi, emprunt refuse faute de
 stock, retour et double retour.
 
