@@ -1,0 +1,84 @@
+@gatewayUrl = http://localhost:8080
+
+### 0. Sante de la gateway
+GET {{gatewayUrl}}/actuator/health
+
+###
+# ============================================================
+# SECTION A — Livres (book-service, port 8091)
+# ============================================================
+
+### A1. Lister tous les livres
+GET {{gatewayUrl}}/api/books
+
+### A2. Creer un livre (availableCopies initialise a totalCopies = 1)
+POST {{gatewayUrl}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Le Petit Prince",
+  "author": "Saint-Exupery",
+  "isbn": "978-2070612758",
+  "totalCopies": 1,
+  "availableCopies": 1
+}
+
+> {%
+    client.global.set("bookId", response.body.id);
+%}
+
+### A3. Recuperer le livre cree
+GET {{gatewayUrl}}/api/books/{{bookId}}
+
+###
+# ============================================================
+# SECTION B — Creation d'emprunts (loan-service, port 8092)
+# ============================================================
+
+### B1. Lister tous les emprunts
+GET {{gatewayUrl}}/api/loans
+
+### B2. Creer un emprunt reussi (un exemplaire disponible)
+POST {{gatewayUrl}}/api/loans
+Content-Type: application/json
+
+{
+  "memberName": "Bob",
+  "bookId": {{bookId}}
+}
+
+> {%
+    client.global.set("loanId", response.body.id);
+%}
+
+### B3. Creer un emprunt refuse (stock epuise -> 409 Conflict)
+POST {{gatewayUrl}}/api/loans
+Content-Type: application/json
+
+{
+  "memberName": "Alice",
+  "bookId": {{bookId}}
+}
+
+### B4. Creer un emprunt pour un livre inexistant (-> 400 Bad Request)
+POST {{gatewayUrl}}/api/loans
+Content-Type: application/json
+
+{
+  "memberName": "Bob",
+  "bookId": 999999
+}
+
+###
+# ============================================================
+# SECTION C — Retour d'un emprunt (loan-service)
+# ============================================================
+
+### C1. Rendre l'emprunt (-> 200, status RETURNED)
+PATCH {{gatewayUrl}}/api/loans/{{loanId}}/return
+
+### C2. Tenter de rendre deux fois le meme emprunt (-> 409 Conflict)
+PATCH {{gatewayUrl}}/api/loans/{{loanId}}/return
+
+### C3. Recuperer l'emprunt apres retour
+GET {{gatewayUrl}}/api/loans/{{loanId}}
