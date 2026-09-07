@@ -12,7 +12,7 @@
 
     <artifactId>book-server</artifactId>
     <name>book-server</name>
-    <description>Serveur d'annuaire (service discovery) - enregistre les URLs de tous les microservices</description>
+    <description>Service de gestion des livres - Vérification de la disponibilité</description>
 
     <dependencies>
     <dependency>
